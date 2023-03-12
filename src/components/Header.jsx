@@ -2,7 +2,7 @@ import { RiShoppingCartLine, RiHeart2Line } from 'react-icons/ri';
 
 const Header = () => {
   return (
-    <header className="text-[#9298A4] py-4 px-10 flex items-center justify-between">
+    <header className="text-secondary py-4 px-10 flex items-center justify-between">
       {/* Menu */}
       <ul className="flex items-center gap-6">
         <li>
