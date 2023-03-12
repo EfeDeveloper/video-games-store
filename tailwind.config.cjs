@@ -8,7 +8,10 @@ module.exports = {
         primary: '#2D5EEE',
         secondary: '#E3E2E7',
       },
+      fontFamily: {
+        nunito: ['Nunito', 'sans-serif'],
+      },
     },
+    plugins: [],
   },
-  plugins: [],
 };
