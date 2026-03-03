@@ -25,7 +25,19 @@
 
 ## 🧐 About <a name = "about"></a>
 
-Video game store design, using React, Vite & Tailwindcss, with attractive and relevant touches.
+Modern video game store built with React, TypeScript, Vite & Tailwind CSS. Features real game data from RAWG API, shopping cart, wishlist, advanced filtering, and a responsive design.
+
+## ✨ Features
+
+- 🎮 **Real Game Database**: Integration with RAWG API (500k+ games)
+- 🛒 **Shopping Cart**: Add/remove games with persistent storage
+- ❤️ **Wishlist**: Save favorite games for later
+- 🔍 **Advanced Search**: Filter by categories, platforms, price, and more
+- 📱 **Responsive Design**: Beautiful UI on all devices
+- ⚡ **Fast Performance**: Built with Vite and optimized rendering
+- 🎨 **Modern UI**: Smooth animations and transitions
+- 💾 **Persistent State**: Cart and wishlist saved in localStorage
+- 🔧 **TypeScript**: Full type safety throughout the application
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
@@ -37,38 +49,121 @@ git clone https://github.com/EfeDeveloper/video-games-store.git
 
 ### Prerequisites
 
-> Have `node.js` installed as of version 14 and have access to a terminal
-
-[Node.js](https://nodejs.org/es/download/)
+- [Node.js](https://nodejs.org/es/download/) (version 20 or higher)
+- [RAWG API Key](https://rawg.io/apidocs) (free tier: 20,000 requests/month)
 
 ### Installing
 
-> 1. cd to the video-games-store directory we just cloned and install the necessary dependencies with the following command
+1. **Clone the repository**
 
+```bash
+git clone https://github.com/EfeDeveloper/video-games-store.git
+cd video-games-store
 ```
+
+2. **Install dependencies**
+
+```bash
 npm install
-#
-yarn
 ```
 
-> 2. We run our project locally
+3. **Configure API Key**
+   - Visit [RAWG API](https://rawg.io/apidocs) and create a free account
+   - Get your API key
+   - Copy `.env.example` to `.env`:
+
+```bash
+cp .env.example .env
+```
+
+- Open `.env` and add your API key:
 
 ```
-npm dev
-#
-yarn dev
+VITE_RAWG_API_KEY=your_api_key_here
+```
+
+4. **Run the development server**
+
+```bash
+npm run dev
+```
+
+5. **Open your browser** at `http://localhost:5173`
+
+### Available Scripts
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint
+npm run lint:fix     # Fix ESLint errors
+npm run format       # Format code with Prettier
+npm run type-check   # Check TypeScript errors
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── components/        # React components
+│   ├── ProductCard.tsx
+│   ├── ProductGrid.tsx
+│   ├── CartDrawer.tsx
+│   └── ...
+├── store/            # Zustand stores
+│   ├── useCartStore.ts
+│   ├── useWishlistStore.ts
+│   └── useFilterStore.ts
+├── hooks/            # Custom React hooks
+│   ├── useGames.ts
+│   └── useFetch.ts
+├── services/         # API services
+│   └── gamesApi.ts
+├── config/           # Configuration files
+│   └── api.ts
+├── types/            # TypeScript type definitions
+│   └── index.ts
+├── common/           # Constants and utilities
+│   └── constants/
+└── ...
 ```
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-- [Vite](https://vitejs.dev/) - Module Bundler
-- [ReactJs](https://beta.reactjs.org/) - Web Framework
-- [tailwindcss](https://tailwindcss.com/) - Framework CSS
+### Core Technologies
+
+- [React 18](https://react.dev/) - UI Library
+- [TypeScript](https://www.typescriptlang.org/) - Type Safety
+- [Vite](https://vitejs.dev/) - Build Tool & Dev Server
+- [Tailwind CSS](https://tailwindcss.com/) - CSS Framework
+
+### State Management & Data
+
+- [Zustand](https://zustand-demo.pmnd.rs/) - State Management
+- [RAWG API](https://rawg.io/apidocs) - Game Database
+
+### UI & Animations
+
+- [React Icons](https://react-icons.github.io/react-icons/) - Icon Library
+- [Framer Motion](https://www.framer.com/motion/) - Animations
+- [React Router](https://reactrouter.com/) - Routing
+- [React Hot Toast](https://react-hot-toast.com/) - Notifications
+
+### Code Quality
+
+- [ESLint](https://eslint.org/) - Linting
+- [Prettier](https://prettier.io/) - Code Formatting
+- [TypeScript ESLint](https://typescript-eslint.io/) - TS Linting
+
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## ✍️ Authors <a name = "authors"></a>
 
 - [@EfeDeveloper](https://github.com/EfeDeveloper) - Development & implementation
-- [@Alexander Kontsevoy](https://dribbble.com/shots/18271611-Game-Store-Website-animation) - Idea & UI design
 
 See also the list of [contributors](https://github.com/EfeDeveloper/video-games-store/contributors) who participated in this project.
 
