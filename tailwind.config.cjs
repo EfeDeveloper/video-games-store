@@ -3,6 +3,9 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      screens: {
+        '3xl': '1920px',
+      },
       colors: {
         background: '#0F0820',
         primary: '#8B5CF6',
@@ -14,7 +17,7 @@ module.exports = {
         'cyan-bright': '#14B8A6',
       },
       fontFamily: {
-        nunito: ['Nunito', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       backgroundImage: {
         'gaming-gradient': 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #06B6D4 100%)',

@@ -27,7 +27,7 @@ export const CartItem = memo(({ item }: CartItemProps) => {
   }, [item.game.id, item.game.name, removeFromCart]);
 
   return (
-    <div className="flex gap-4 relative bg-gradient-to-br from-purple-900/40 to-background border border-primary/20 hover:border-primary/40 shadow-lg hover:shadow-glow-purple p-4 rounded-lg transition-all duration-300 overflow-hidden group">
+    <div className="group relative flex gap-4 bg-gradient-to-br from-purple-900/40 to-background shadow-lg hover:shadow-glow-purple p-4 border border-primary/20 hover:border-primary/40 rounded-lg overflow-hidden transition-all duration-300">
       <div className="relative flex-shrink-0 rounded-lg w-24 h-24 overflow-hidden">
         <img
           src={item.game.background_image || '/placeholder-game.jpg'}
@@ -46,19 +46,19 @@ export const CartItem = memo(({ item }: CartItemProps) => {
         <div className="flex items-center gap-2">
           <button
             onClick={handleDecrease}
-            className="bg-gradient-to-br from-primary/20 to-purple-600/20 hover:from-primary/30 hover:to-purple-600/30 border border-primary/30 hover:border-primary/50 p-1.5 rounded transition-all hover:shadow-glow-purple"
+            className="bg-gradient-to-br from-primary/20 hover:from-primary/30 to-purple-600/20 hover:to-purple-600/30 hover:shadow-glow-purple p-1.5 border border-primary/30 hover:border-primary/50 rounded transition-all"
             aria-label="Decrease quantity"
           >
             <FiMinus size={14} className="text-primary" />
           </button>
 
-          <span className="bg-gradient-to-r from-primary/10 to-purple-600/10 px-3 py-1 rounded w-auto min-w-[2rem] font-bold text-center text-primary text-sm">
+          <span className="bg-gradient-to-r from-primary/10 to-purple-600/10 px-3 py-1 rounded w-auto min-w-[2rem] font-bold text-primary text-sm text-center">
             {item.quantity}
           </span>
 
           <button
             onClick={handleIncrease}
-            className="bg-gradient-to-br from-primary/20 to-purple-600/20 hover:from-primary/30 hover:to-purple-600/30 border border-primary/30 hover:border-primary/50 p-1.5 rounded transition-all hover:shadow-glow-purple"
+            className="bg-gradient-to-br from-primary/20 hover:from-primary/30 to-purple-600/20 hover:to-purple-600/30 hover:shadow-glow-purple p-1.5 border border-primary/30 hover:border-primary/50 rounded transition-all"
             aria-label="Increase quantity"
           >
             <FiPlus size={14} className="text-primary" />
@@ -66,7 +66,7 @@ export const CartItem = memo(({ item }: CartItemProps) => {
 
           <button
             onClick={handleRemove}
-            className="hover:bg-red-500/20 ml-auto p-2 rounded text-red-400 hover:text-red-300 hover:shadow-glow-pink transition-all"
+            className="hover:bg-red-500/20 hover:shadow-glow-pink ml-auto p-2 rounded text-red-400 hover:text-red-300 transition-all"
             aria-label="Remove from cart"
           >
             <FiTrash2 size={18} />

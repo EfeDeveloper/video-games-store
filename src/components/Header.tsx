@@ -4,6 +4,7 @@ import {
   RiHeart2Line,
   RiUser3Line,
   RiMenu3Line,
+  RiGamepadLine,
 } from 'react-icons/ri';
 import { useCartStore } from '@/store/useCartStore';
 import { useWishlistStore } from '@/store/useWishlistStore';
@@ -46,16 +47,16 @@ const Header = () => {
         </div>
 
         {/* User menu */}
-        <ul className="flex items-center gap-4 sm:gap-6 text-2xl">
+        <ul className="flex items-center gap-4 sm:gap-6">
           <li className="relative">
             <button
               onClick={() => setIsCartOpen(true)}
-              className="group relative header-hover"
+              className="group relative hover:bg-accent/10 p-2 rounded-lg text-2xl transition-all"
               aria-label="Shopping cart"
             >
-              <RiShoppingCartLine />
+              <RiShoppingCartLine className="text-secondary group-hover:text-accent transition-colors" />
               {cartItemCount > 0 && (
-                <span className="-top-2 -right-2 absolute flex justify-center items-center bg-gradient-to-r from-accent to-cyan-bright shadow-glow-cyan rounded-full w-5 h-5 font-bold text-white text-xs animate-pulse-glow">
+                <span className="-top-1 -right-1 absolute flex justify-center items-center bg-gradient-to-r from-accent to-cyan-bright shadow-glow-cyan rounded-full w-5 h-5 font-bold text-white text-xs animate-pulse-glow">
                   {cartItemCount}
                 </span>
               )}
@@ -64,23 +65,46 @@ const Header = () => {
           <li className="relative">
             <button
               onClick={() => setIsWishlistOpen(true)}
-              className="group relative header-hover"
+              className="group relative hover:bg-neon/10 p-2 rounded-lg text-2xl transition-all"
               aria-label="Wishlist"
             >
-              <RiHeart2Line />
+              <RiHeart2Line className="text-secondary group-hover:text-neon transition-colors" />
               {wishlistCount > 0 && (
-                <span className="-top-2 -right-2 absolute flex justify-center items-center bg-gradient-to-r from-neon to-pink-600 shadow-glow-pink rounded-full w-5 h-5 font-bold text-white text-xs animate-pulse-glow">
+                <span className="-top-1 -right-1 absolute flex justify-center items-center bg-gradient-to-r from-neon to-pink-600 shadow-glow-pink rounded-full w-5 h-5 font-bold text-white text-xs animate-pulse-glow">
                   {wishlistCount}
                 </span>
               )}
             </button>
           </li>
-          <li>
+          <li className="ml-2">
             <button
-              className="flex justify-center items-center bg-gradient-to-br from-primary hover:from-primary to-purple-700 hover:to-neon shadow-glow-purple hover:shadow-glow-multi rounded-full ring-2 ring-accent w-8 h-8 transition-all duration-300"
+              className="group relative flex justify-center items-center bg-gradient-to-br from-primary hover:from-accent via-purple-600 hover:via-neon to-neon hover:to-primary shadow-lg shadow-primary/50 hover:shadow-glow-multi p-[3px] rounded-xl w-10 h-10 hover:scale-110 transition-all duration-500"
               aria-label="User menu"
             >
-              <RiUser3Line className="text-white" size={20} />
+              {/* Animated pulse ring */}
+              <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-neon opacity-0 group-hover:opacity-100 blur-sm rounded-xl transition-opacity animate-pulse duration-500" />
+              
+              {/* Inner container */}
+              <div className="relative flex justify-center items-center bg-gradient-to-br from-purple-dark via-purple-900 to-background rounded-lg w-full h-full overflow-hidden">
+                {/* Corner accents */}
+                <div className="top-0 left-0 absolute bg-gradient-to-br from-accent to-transparent opacity-60 rounded-tl-lg w-3 h-3" />
+                <div className="right-0 bottom-0 absolute bg-gradient-to-tl from-neon to-transparent opacity-60 rounded-br-lg w-3 h-3" />
+                
+                {/* Front icon (User) - Fades out on hover */}
+                <div className="absolute inset-0 flex justify-center items-center opacity-100 group-hover:opacity-0 transition-opacity duration-500">
+                  <div className="relative">
+                    <RiUser3Line className="z-10 relative text-white" size={20} />
+                  </div>
+                </div>
+                
+                {/* Back icon (Gamepad) - Fades in on hover */}
+                <div className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-neon to-accent opacity-50 blur-md" />
+                    <RiGamepadLine className="z-10 relative text-neon animate-pulse" size={20} />
+                  </div>
+                </div>
+              </div>
             </button>
           </li>
         </ul>
