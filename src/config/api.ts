@@ -5,6 +5,8 @@ export const API_CONFIG = {
     GAMES: '/games',
     GAME_DETAILS: (id: number) => `/games/${id}`,
     GAME_SCREENSHOTS: (id: number) => `/games/${id}/screenshots`,
+    PLATFORMS: '/platforms',
+    GENRES: '/genres',
   },
   DEFAULT_PAGE_SIZE: 20,
 };

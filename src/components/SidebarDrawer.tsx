@@ -1,14 +1,15 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
 import {
-  RiMoneyDollarCircleLine,
   RiTwitterLine,
   RiInstagramLine,
   RiYoutubeLine,
   RiFacebookFill,
+  RiGamepadLine,
+  RiGameLine,
 } from 'react-icons/ri';
-import { categories } from '@/common/constants/categories';
-import { platforms } from '@/common/constants/platforms';
+import { usePlatforms } from '@/hooks/usePlatforms';
+import { useGenres } from '@/hooks/useGenres';
 import { useFilterStore } from '@/store/useFilterStore';
 
 interface SidebarDrawerProps {
@@ -20,16 +21,16 @@ export const SidebarDrawer = ({ isOpen, onClose }: SidebarDrawerProps) => {
   const {
     selectedCategories,
     selectedPlatforms,
-    priceRange,
     toggleCategory,
     togglePlatform,
-    setPriceRange,
     resetFilters,
   } = useFilterStore();
 
-  const handlePriceSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+  const { data: platformsData, loading: platformsLoading, error: platformsError } = usePlatforms();
+  const { data: genresData, loading: genresLoading, error: genresError } = useGenres();
+
+  const platforms = platformsData?.results || [];
+  const genres = genresData?.results || [];
 
   const handleReset = () => {
     resetFilters();
@@ -45,141 +46,137 @@ export const SidebarDrawer = ({ isOpen, onClose }: SidebarDrawerProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="lg:hidden z-40 fixed inset-0 bg-black/50 backdrop-blur-sm"
+            className="lg:hidden z-40 fixed inset-0 bg-gradient-to-br from-purple-900/50 via-background/80 to-purple-900/50 backdrop-blur-md"
           />
 
           <motion.div
-            initial={{ x: '-100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="lg:hidden top-0 left-0 z-50 fixed flex flex-col bg-background shadow-2xl w-full sm:w-80 h-full overflow-y-auto"
+            initial={{ x: '-100%', opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: '-100%', opacity: 0 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="lg:hidden top-0 left-0 z-50 fixed flex flex-col bg-gradient-to-b from-purple-dark to-background shadow-glow-multi border-primary/30 border-r w-full sm:w-80 h-full overflow-y-auto"
           >
-            <div className="top-0 z-10 sticky flex justify-between items-center bg-background p-6 border-gray-700 border-b">
-              <h2 className="font-bold text-white text-xl">Filters</h2>
+            <div className="top-0 z-10 sticky flex justify-between items-center bg-gradient-to-r from-purple-900/80 to-transparent backdrop-blur-sm p-6 border-primary/20 border-b">
+              <h2 className="bg-clip-text bg-gradient-to-r from-primary to-accent font-bold text-transparent text-xl">
+                Filters
+              </h2>
               <button
                 onClick={onClose}
-                className="hover:bg-gray-700 p-2 rounded-lg transition-colors"
+                className="hover:bg-primary/20 hover:shadow-glow-purple p-2 rounded-lg transition-all"
                 aria-label="Close filters"
               >
-                <FiX className="text-white" size={24} />
+                <FiX className="text-accent" size={24} />
               </button>
             </div>
 
             <div className="flex-1 p-6">
               <div className="flex justify-between items-center mb-6">
-                <h4 className="font-semibold text-white text-lg">
+                <h4 className="bg-clip-text bg-gradient-to-r from-primary to-accent font-semibold text-transparent text-lg">
                   Active Filters
                 </h4>
                 <button
                   onClick={handleReset}
-                  className="text-primary hover:text-primary/80 text-sm transition-colors"
+                  className="text-accent hover:text-cyan-bright text-sm hover:underline transition-colors"
                 >
                   Reset All
                 </button>
               </div>
 
-              <h5 className="mb-3 font-semibold text-md text-white">
-                Categories
-              </h5>
-              <div className="flex flex-col gap-2 mb-6">
-                {categories.map((category) => (
-                  <div className="flex items-center gap-2" key={category.id}>
-                    <input
-                      type="checkbox"
-                      id={`drawer-category-${category.id}`}
-                      checked={selectedCategories.includes(category.id)}
-                      onChange={() => toggleCategory(category.id)}
-                      className="cursor-pointer"
-                    />
-                    <label
-                      htmlFor={`drawer-category-${category.id}`}
-                      className="text-gray-300 text-sm cursor-pointer"
-                    >
-                      {category.label}
-                    </label>
+              {/* Genres Section */}
+              <div className="mb-6">
+                <h5 className="flex items-center gap-2 mb-3 font-semibold text-md text-primary">
+                  <RiGameLine className="text-accent" />
+                  Genres
+                </h5>
+                
+                {genresLoading && (
+                  <div className="flex flex-col gap-2">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="bg-purple-900/50 rounded h-6 shimmer" />
+                    ))}
                   </div>
-                ))}
+                )}
+
+                {genresError && (
+                  <p className="text-red-400 text-sm">Failed to load genres</p>
+                )}
+
+                {!genresLoading && !genresError && (
+                  <div className="flex flex-col gap-2">
+                    {genres.map((genre) => (
+                      <div className="flex items-center gap-2" key={genre.id}>
+                        <input
+                          type="checkbox"
+                          id={`drawer-genre-${genre.id}`}
+                          checked={selectedCategories.includes(genre.id)}
+                          onChange={() => toggleCategory(genre.id)}
+                          className="bg-background checked:bg-gradient-to-r checked:from-primary checked:to-purple-600 border-primary/30 rounded focus:ring-2 focus:ring-primary w-4 h-4 transition-all cursor-pointer"
+                        />
+                        <label
+                          htmlFor={`drawer-genre-${genre.id}`}
+                          className="flex-1 text-gray-300 hover:text-primary text-sm transition-colors cursor-pointer"
+                        >
+                          {genre.name}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              <h5 className="mb-3 font-semibold text-md text-white">
-                Platforms
-              </h5>
-              <div className="flex flex-col gap-2 mb-6">
-                {platforms.map((platform) => (
-                  <div className="flex items-center gap-2" key={platform.id}>
-                    <input
-                      type="checkbox"
-                      id={`drawer-platform-${platform.id}`}
-                      checked={selectedPlatforms.includes(platform.id)}
-                      onChange={() => togglePlatform(platform.id)}
-                      className="cursor-pointer"
-                    />
-                    <label
-                      htmlFor={`drawer-platform-${platform.id}`}
-                      className="text-gray-300 text-sm cursor-pointer"
-                    >
-                      {platform.label}
-                    </label>
+              {/* Platforms Section */}
+              <div className="mb-6">
+                <h5 className="flex items-center gap-2 mb-3 font-semibold text-md text-primary">
+                  <RiGamepadLine className="text-accent" />
+                  Platforms
+                </h5>
+                
+                {platformsLoading && (
+                  <div className="flex flex-col gap-2">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="bg-purple-900/50 rounded h-6 shimmer" />
+                    ))}
                   </div>
-                ))}
-              </div>
+                )}
 
-              <h5 className="mb-3 font-semibold text-md text-white">
-                Price Range
-              </h5>
-              <form
-                onSubmit={handlePriceSubmit}
-                className="flex flex-col gap-4 mb-6"
-              >
-                <div className="flex justify-between items-center gap-4">
-                  <div className="relative flex-1">
-                    <RiMoneyDollarCircleLine className="top-1/2 left-3 absolute text-gray-400 -translate-y-1/2" />
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      value={priceRange.min}
-                      onChange={(e) =>
-                        setPriceRange(Number(e.target.value), priceRange.max)
-                      }
-                      className="bg-[#27272A] p-2 pr-4 pl-8 rounded-lg outline-none w-full text-white text-sm"
-                      placeholder="Min"
-                    />
+                {platformsError && (
+                  <p className="text-red-400 text-sm">Failed to load platforms</p>
+                )}
+
+                {!platformsLoading && !platformsError && (
+                  <div className="flex flex-col gap-2">
+                    {platforms.map((platform) => (
+                      <div className="flex items-center gap-2" key={platform.id}>
+                        <input
+                          type="checkbox"
+                          id={`drawer-platform-${platform.id}`}
+                          checked={selectedPlatforms.includes(platform.id)}
+                          onChange={() => togglePlatform(platform.id)}
+                          className="bg-background checked:bg-gradient-to-r checked:from-accent checked:to-cyan-bright border-accent/30 rounded focus:ring-2 focus:ring-accent w-4 h-4 transition-all cursor-pointer"
+                        />
+                        <label
+                          htmlFor={`drawer-platform-${platform.id}`}
+                          className="flex-1 text-gray-300 hover:text-accent text-sm transition-colors cursor-pointer"
+                        >
+                          {platform.name}
+                        </label>
+                      </div>
+                    ))}
                   </div>
-                  <span className="text-gray-400">-</span>
-                  <div className="relative flex-1">
-                    <RiMoneyDollarCircleLine className="top-1/2 left-3 absolute text-gray-400 -translate-y-1/2" />
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      value={priceRange.max}
-                      onChange={(e) =>
-                        setPriceRange(priceRange.min, Number(e.target.value))
-                      }
-                      className="bg-[#27272A] p-2 pr-4 pl-8 rounded-lg outline-none w-full text-white text-sm"
-                      placeholder="Max"
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-between items-center px-1 text-gray-400 text-xs">
-                  <span>${priceRange.min}</span>
-                  <span>${priceRange.max}</span>
-                </div>
-              </form>
+                )}
+              </div>
             </div>
 
-            <div className="bottom-0 sticky bg-background p-6 border-gray-700 border-t">
-              <h3 className="mb-4 font-semibold text-gray-400 text-sm uppercase tracking-wider">
+            <div className="bottom-0 sticky bg-gradient-to-r from-transparent to-purple-900/30 backdrop-blur-sm p-6 border-primary/20 border-t">
+              <h3 className="mb-4 font-semibold text-accent text-sm uppercase tracking-wider">
                 Follow Us
               </h3>
-              <div className="flex gap-4">
+              <div className="flex gap-3">
                 <a
                   href="https://twitter.com/?lang=es"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex justify-center items-center bg-gray-700 hover:bg-primary rounded-lg w-10 h-10 transition-colors"
+                  className="flex justify-center items-center bg-gradient-to-br from-purple-700 hover:from-primary to-primary hover:to-neon shadow-md hover:shadow-glow-purple rounded-lg w-11 h-11 hover:scale-110 transition-all"
                   aria-label="Twitter"
                 >
                   <RiTwitterLine className="text-white" size={20} />
@@ -188,7 +185,7 @@ export const SidebarDrawer = ({ isOpen, onClose }: SidebarDrawerProps) => {
                   href="https://www.instagram.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex justify-center items-center bg-gray-700 hover:bg-primary rounded-lg w-10 h-10 transition-colors"
+                  className="flex justify-center items-center bg-gradient-to-br from-purple-700 hover:from-neon to-neon hover:to-accent shadow-md hover:shadow-glow-pink rounded-lg w-11 h-11 hover:scale-110 transition-all"
                   aria-label="Instagram"
                 >
                   <RiInstagramLine className="text-white" size={20} />
@@ -197,7 +194,7 @@ export const SidebarDrawer = ({ isOpen, onClose }: SidebarDrawerProps) => {
                   href="https://www.youtube.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex justify-center items-center bg-gray-700 hover:bg-primary rounded-lg w-10 h-10 transition-colors"
+                  className="flex justify-center items-center bg-gradient-to-br from-purple-700 hover:from-accent to-accent hover:to-cyan-bright shadow-md hover:shadow-glow-cyan rounded-lg w-11 h-11 hover:scale-110 transition-all"
                   aria-label="YouTube"
                 >
                   <RiYoutubeLine className="text-white" size={20} />
@@ -206,7 +203,7 @@ export const SidebarDrawer = ({ isOpen, onClose }: SidebarDrawerProps) => {
                   href="https://www.facebook.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex justify-center items-center bg-gray-700 hover:bg-primary rounded-lg w-10 h-10 transition-colors"
+                  className="flex justify-center items-center bg-gradient-to-br from-purple-700 hover:from-primary to-primary hover:to-purple-500 shadow-md hover:shadow-glow-purple rounded-lg w-11 h-11 hover:scale-110 transition-all"
                   aria-label="Facebook"
                 >
                   <RiFacebookFill className="text-white" size={20} />

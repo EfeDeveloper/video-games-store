@@ -1,13 +1,17 @@
 export interface Category {
   id: number;
-  label: string;
-  slug?: string;
+  name: string;
+  slug: string;
+  games_count?: number;
+  image_background?: string;
 }
 
 export interface Platform {
   id: number;
-  label: string;
-  slug?: string;
+  name: string;
+  slug: string;
+  games_count?: number;
+  image_background?: string;
 }
 
 export interface PriceRange {
@@ -81,7 +85,6 @@ export interface FilterState {
   searchQuery: string;
   selectedCategories: number[];
   selectedPlatforms: number[];
-  priceRange: PriceRange;
   sortBy: SortOption;
 }
 
@@ -101,4 +104,18 @@ export interface GamesResponse {
   next: string | null;
   previous: string | null;
   results: Game[];
+}
+
+export interface PlatformsResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Platform[];
+}
+
+export interface GenresResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Category[];
 }

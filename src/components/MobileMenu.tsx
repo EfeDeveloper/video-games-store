@@ -13,13 +13,6 @@ interface MobileMenuProps {
 }
 
 export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
-  const menuItems = [
-    { label: 'Home', href: '#' },
-    { label: 'Streams', href: '#' },
-    { label: 'Game store', href: '#' },
-    { label: 'News', href: '#' },
-  ];
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -29,72 +22,72 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="lg:hidden z-40 fixed inset-0 bg-black/50 backdrop-blur-sm"
+            className="lg:hidden z-40 fixed inset-0 bg-gradient-to-br from-purple-900/50 via-background/80 to-purple-900/50 backdrop-blur-md"
           />
 
           <motion.div
-            initial={{ x: '-100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="lg:hidden top-0 left-0 z-50 fixed flex flex-col bg-background shadow-2xl w-full sm:w-80 h-full"
+            initial={{ x: '-100%', opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: '-100%', opacity: 0 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="lg:hidden top-0 left-0 z-50 fixed flex flex-col bg-gradient-to-b from-purple-dark to-background shadow-glow-multi border-primary/30 border-r w-full sm:w-80 h-full"
           >
-            <div className="flex justify-between items-center p-6 border-gray-700 border-b">
-              <h2 className="font-bold text-white text-xl">Menu</h2>
+            <div className="flex justify-between items-center bg-gradient-to-r from-purple-900/50 to-transparent p-6 border-primary/20 border-b">
+              <h2 className="bg-clip-text bg-gradient-to-r from-primary to-accent font-bold text-transparent text-xl">
+                Menu
+              </h2>
               <button
                 onClick={onClose}
-                className="hover:bg-gray-700 p-2 rounded-lg transition-colors"
+                className="hover:bg-primary/20 hover:shadow-glow-purple p-2 rounded-lg transition-all"
                 aria-label="Close menu"
               >
-                <FiX className="text-white" size={24} />
+                <FiX className="text-accent" size={24} />
               </button>
             </div>
 
-            <nav className="flex-1 p-6">
-              <ul className="space-y-4">
-                {menuItems.map((item) => (
-                  <li key={item.label}>
-                    <a
-                      href={item.href}
-                      onClick={onClose}
-                      className="block hover:bg-gray-800 p-3 rounded-lg font-medium text-gray-300 hover:text-primary text-lg transition-colors"
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            <div className="flex flex-col flex-1 justify-center items-center p-6">
+              <div className="text-center">
+                <h3 className="bg-clip-text bg-gradient-to-r from-primary via-accent to-cyan-bright mb-1 font-black text-transparent text-5xl tracking-wider">
+                  EDFER
+                </h3>
+                <span className="block mb-3 font-light text-accent/80 text-sm tracking-[0.3em]">
+                  Video Games
+                </span>
+                <p className="text-gray-400 text-sm">
+                  Discover amazing games
+                </p>
+              </div>
+            </div>
 
-            <div className="p-6 border-gray-700 border-t">
-              <h3 className="mb-4 font-semibold text-gray-400 text-sm uppercase tracking-wider">
+            <div className="bg-gradient-to-r from-transparent to-purple-900/30 p-6 border-primary/20 border-t">
+              <h3 className="mb-4 font-semibold text-accent text-sm uppercase tracking-wider">
                 Follow Us
               </h3>
-              <div className="flex gap-4">
+              <div className="flex gap-3">
                 <a
                   href="#"
-                  className="flex justify-center items-center bg-gray-700 hover:bg-primary rounded-lg w-10 h-10 transition-colors"
+                  className="flex justify-center items-center bg-gradient-to-br from-purple-700 hover:from-primary to-primary hover:to-neon shadow-md hover:shadow-glow-purple rounded-lg w-11 h-11 hover:scale-110 transition-all"
                   aria-label="Twitter"
                 >
                   <RiTwitterLine className="text-white" size={20} />
                 </a>
                 <a
                   href="#"
-                  className="flex justify-center items-center bg-gray-700 hover:bg-primary rounded-lg w-10 h-10 transition-colors"
+                  className="flex justify-center items-center bg-gradient-to-br from-purple-700 hover:from-neon to-neon hover:to-accent shadow-md hover:shadow-glow-pink rounded-lg w-11 h-11 hover:scale-110 transition-all"
                   aria-label="Instagram"
                 >
                   <RiInstagramLine className="text-white" size={20} />
                 </a>
                 <a
                   href="#"
-                  className="flex justify-center items-center bg-gray-700 hover:bg-primary rounded-lg w-10 h-10 transition-colors"
+                  className="flex justify-center items-center bg-gradient-to-br from-purple-700 hover:from-accent to-accent hover:to-cyan-bright shadow-md hover:shadow-glow-cyan rounded-lg w-11 h-11 hover:scale-110 transition-all"
                   aria-label="YouTube"
                 >
                   <RiYoutubeLine className="text-white" size={20} />
                 </a>
                 <a
                   href="#"
-                  className="flex justify-center items-center bg-gray-700 hover:bg-primary rounded-lg w-10 h-10 transition-colors"
+                  className="flex justify-center items-center bg-gradient-to-br from-purple-700 hover:from-primary to-primary hover:to-purple-500 shadow-md hover:shadow-glow-purple rounded-lg w-11 h-11 hover:scale-110 transition-all"
                   aria-label="Facebook"
                 >
                   <RiFacebookFill className="text-white" size={20} />

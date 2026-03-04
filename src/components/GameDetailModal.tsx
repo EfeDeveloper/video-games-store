@@ -80,7 +80,7 @@ export const GameDetailModal = () => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={handleClose}
-        className="z-50 fixed inset-0 flex justify-center items-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto"
+        className="z-50 fixed inset-0 flex justify-center items-center bg-gradient-to-br from-purple-900/90 via-black/90 to-background/90 backdrop-blur-md p-4 overflow-y-auto"
         role="dialog"
         aria-modal="true"
         aria-labelledby="game-detail-title"
@@ -91,7 +91,7 @@ export const GameDetailModal = () => {
           exit={{ scale: 0.9, opacity: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-[#27272A] shadow-2xl my-8 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+          className="bg-gradient-to-b from-purple-dark to-purple-deep shadow-glow-multi my-8 border border-primary/20 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
         >
           {loading && (
             <motion.div
@@ -121,21 +121,24 @@ export const GameDetailModal = () => {
 
           {game && !loading && (
             <>
-              <div className="relative">
-                <img
-                  src={game.background_image || '/placeholder-game.jpg'}
-                  alt={game.name}
-                  className="rounded-t-xl w-full h-80 object-cover"
-                />
+              <div className="relative rounded-t-xl overflow-hidden">
+                <div className="relative bg-gradient-to-br from-purple-deep to-black w-full aspect-video">
+                  <img
+                    src={game.background_image || '/placeholder-game.jpg'}
+                    alt={game.name}
+                    className="w-full h-full object-contain"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-purple-deep/80 via-transparent to-transparent" />
+                </div>
                 <button
                   onClick={handleClose}
-                  className="top-4 right-4 absolute bg-black/50 hover:bg-black/70 backdrop-blur-sm p-2 rounded-full hover:rotate-90 hover:scale-110 transition-all duration-200"
+                  className="top-4 right-4 z-10 absolute bg-black/60 hover:bg-primary/80 shadow-lg hover:shadow-glow-purple backdrop-blur-sm p-2 rounded-full hover:rotate-90 hover:scale-110 transition-all duration-200"
                   aria-label="Close modal"
                 >
                   <FiX className="text-white" size={24} />
                 </button>
                 {game.metacritic && (
-                  <div className="top-4 left-4 absolute bg-primary px-3 py-2 rounded-lg font-bold text-white text-lg">
+                  <div className="top-4 left-4 z-10 absolute bg-gradient-to-r from-primary to-purple-600 shadow-glow-purple px-3 py-2 border border-primary/50 rounded-lg font-bold text-white text-lg">
                     {game.metacritic}
                   </div>
                 )}
@@ -252,10 +255,10 @@ export const GameDetailModal = () => {
                     <div className="mb-4 font-bold text-primary text-3xl">
                       $29.99
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex items-center gap-3">
                       <button
                         onClick={handleAddToCart}
-                        className="flex flex-1 justify-center items-center gap-2 bg-primary hover:bg-primary/90 px-6 py-3 rounded-lg font-semibold text-white hover:scale-105 transition-all duration-200"
+                        className="flex justify-center items-center gap-2 bg-gradient-to-r from-primary hover:from-primary/90 to-purple-600 hover:to-purple-700 shadow-lg shadow-primary/50 hover:shadow-primary/70 px-6 py-3 rounded-lg font-semibold text-white hover:scale-[1.02] transition-all duration-200"
                       >
                         <FiShoppingBag size={20} />
                         <span>Add to Cart</span>
@@ -264,8 +267,8 @@ export const GameDetailModal = () => {
                         onClick={handleToggleWishlist}
                         className={`p-3 rounded-lg transition-all duration-200 hover:scale-110 ${
                           inWishlist
-                            ? 'bg-red-500 hover:bg-red-600'
-                            : 'bg-gray-700 hover:bg-gray-600'
+                            ? 'bg-gradient-to-r from-red-500 to-pink-500 shadow-lg shadow-red-500/50 hover:shadow-red-500/70'
+                            : 'bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 shadow-lg shadow-gray-700/30'
                         }`}
                         aria-label={
                           inWishlist

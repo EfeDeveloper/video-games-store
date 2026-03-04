@@ -27,43 +27,46 @@ export const CartItem = memo(({ item }: CartItemProps) => {
   }, [item.game.id, item.game.name, removeFromCart]);
 
   return (
-    <div className="flex gap-4 bg-[#27272A] p-4 rounded-lg">
-      <img
-        src={item.game.background_image || '/placeholder-game.jpg'}
-        alt={item.game.name}
-        className="rounded w-24 h-24 object-cover"
-      />
+    <div className="flex gap-4 relative bg-gradient-to-br from-purple-900/40 to-background border border-primary/20 hover:border-primary/40 shadow-lg hover:shadow-glow-purple p-4 rounded-lg transition-all duration-300 overflow-hidden group">
+      <div className="relative flex-shrink-0 rounded-lg w-24 h-24 overflow-hidden">
+        <img
+          src={item.game.background_image || '/placeholder-game.jpg'}
+          alt={item.game.name}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+      </div>
 
       <div className="flex-1 min-w-0">
-        <h4 className="mb-1 font-semibold text-white truncate">
+        <h4 className="mb-1 font-semibold text-white line-clamp-1">
           {item.game.name}
         </h4>
-        <p className="mb-3 font-bold text-primary">${item.price.toFixed(2)}</p>
+        <p className="bg-clip-text bg-gradient-to-r from-primary to-purple-400 mb-3 font-bold text-transparent text-lg">${item.price.toFixed(2)}</p>
 
         <div className="flex items-center gap-2">
           <button
             onClick={handleDecrease}
-            className="bg-gray-700 hover:bg-gray-600 p-1 rounded transition-colors"
+            className="bg-gradient-to-br from-primary/20 to-purple-600/20 hover:from-primary/30 hover:to-purple-600/30 border border-primary/30 hover:border-primary/50 p-1.5 rounded transition-all hover:shadow-glow-purple"
             aria-label="Decrease quantity"
           >
-            <FiMinus size={16} className="text-white" />
+            <FiMinus size={14} className="text-primary" />
           </button>
 
-          <span className="w-8 font-semibold text-white text-center">
+          <span className="bg-gradient-to-r from-primary/10 to-purple-600/10 px-3 py-1 rounded w-auto min-w-[2rem] font-bold text-center text-primary text-sm">
             {item.quantity}
           </span>
 
           <button
             onClick={handleIncrease}
-            className="bg-gray-700 hover:bg-gray-600 p-1 rounded transition-colors"
+            className="bg-gradient-to-br from-primary/20 to-purple-600/20 hover:from-primary/30 hover:to-purple-600/30 border border-primary/30 hover:border-primary/50 p-1.5 rounded transition-all hover:shadow-glow-purple"
             aria-label="Increase quantity"
           >
-            <FiPlus size={16} className="text-white" />
+            <FiPlus size={14} className="text-primary" />
           </button>
 
           <button
             onClick={handleRemove}
-            className="hover:bg-red-500/10 ml-auto p-2 rounded text-red-500 transition-colors"
+            className="hover:bg-red-500/20 ml-auto p-2 rounded text-red-400 hover:text-red-300 hover:shadow-glow-pink transition-all"
             aria-label="Remove from cart"
           >
             <FiTrash2 size={18} />
