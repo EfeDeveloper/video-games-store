@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import Sidebar from './components/Sidebar';
 import Content from './components/Content';
 import { GameDetailModal } from './components/GameDetailModal';
 import { SidebarDrawer } from './components/SidebarDrawer';
@@ -17,7 +16,6 @@ function App() {
         </a>
         <Header />
         <main id="main-content" className="app-main" role="main">
-          <Sidebar />
           <Content onOpenFilters={() => setIsSidebarOpen(true)} />
         </main>
         <Routes>

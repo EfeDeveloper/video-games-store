@@ -4,7 +4,6 @@ export const API_CONFIG = {
   ENDPOINTS: {
     GAMES: '/games',
     GAME_DETAILS: (id: number) => `/games/${id}`,
-    GAME_SCREENSHOTS: (id: number) => `/games/${id}/screenshots`,
     PLATFORMS: '/platforms',
     GENRES: '/genres',
   },

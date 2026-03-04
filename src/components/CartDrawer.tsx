@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiX, FiShoppingBag } from 'react-icons/fi';
+import { FiX, FiShoppingBag, FiLoader } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { useCartStore } from '@/store/useCartStore';
 import { CartItem } from './CartItem';
 import { EmptyState } from './EmptyState';
+import { Button } from './Button';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -12,12 +14,41 @@ interface CartDrawerProps {
 
 export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const { items, clearCart, getTotalPrice, getTotalItems } = useCartStore();
+  const [isProcessing, setIsProcessing] = useState(false);
   const total = getTotalPrice();
   const itemCount = getTotalItems();
 
   const handleClearCart = () => {
     clearCart();
     toast.success('Cart cleared');
+  };
+
+  const handleCheckout = async () => {
+    if (isProcessing) return;
+    
+    setIsProcessing(true);
+    const loadingToast = toast.loading('Processing your order...');
+
+    try {
+      // Simulate payment processing
+      await new Promise(resolve => setTimeout(resolve, 2500));
+      
+      toast.dismiss(loadingToast);
+      toast.success(
+        `Purchase successful! ${itemCount} ${itemCount === 1 ? 'game' : 'games'} added to your library.`,
+        { duration: 4000 }
+      );
+      
+      clearCart();
+      setTimeout(() => {
+        onClose();
+      }, 1000);
+    } catch (error) {
+      toast.dismiss(loadingToast);
+      toast.error('Payment failed. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -100,16 +131,31 @@ export const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     </span>
                   </div>
 
-                  <button className="bg-gradient-to-r from-primary hover:from-primary/90 to-purple-600 hover:to-purple-700 shadow-lg shadow-primary/50 hover:shadow-primary/70 py-3 rounded-lg w-full font-bold text-white hover:scale-[1.02] transition-all">
-                    Checkout
-                  </button>
+                  <Button 
+                    onClick={handleCheckout}
+                    disabled={isProcessing}
+                    variant="primary"
+                    size="lg"
+                    fullWidth
+                  >
+                    {isProcessing ? (
+                      <>
+                        <FiLoader className="animate-spin" size={20} />
+                        <span>Processing...</span>
+                      </>
+                    ) : (
+                      <span>Checkout</span>
+                    )}
+                  </Button>
 
-                  <button
+                  <Button
                     onClick={handleClearCart}
-                    className="bg-gradient-to-r from-red-500/20 hover:from-red-500/30 to-pink-500/20 hover:to-pink-500/30 hover:shadow-glow-pink py-2 border border-red-500/30 hover:border-red-500/50 rounded-lg w-full font-semibold text-red-400 hover:text-red-300 text-sm transition-all"
+                    variant="danger"
+                    size="md"
+                    fullWidth
                   >
                     Clear Cart
-                  </button>
+                  </Button>
                 </div>
               </>
             )}

@@ -49,11 +49,11 @@ const Content = ({ onOpenFilters }: ContentProps) => {
             <div className="flex items-center gap-3 w-full sm:w-auto">
               <button
                 onClick={onOpenFilters}
-                className="lg:hidden flex items-center gap-2 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition-colors"
+                className="flex items-center gap-2 bg-gradient-to-r from-primary/20 hover:from-primary/30 to-purple-600/20 hover:to-purple-600/30 hover:shadow-glow-purple px-4 py-2.5 border border-primary/30 hover:border-primary/50 rounded-lg font-medium text-white text-sm hover:scale-105 transition-all"
                 aria-label="Open filters"
               >
-                <FiFilter className="text-white" size={20} />
-                <span className="font-medium text-white text-sm">Filters</span>
+                <FiFilter className="text-primary" size={20} />
+                <span>Filters</span>
               </button>
               <div className="flex-1">
                 <SearchBar />
