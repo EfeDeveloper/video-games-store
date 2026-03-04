@@ -8,8 +8,8 @@ interface ErrorMessageProps {
 export const ErrorMessage = ({ message, onRetry }: ErrorMessageProps) => {
   return (
     <div className="flex flex-col justify-center items-center py-20">
-      <FiAlertCircle className="mb-4 text-red-500" size={64} />
-      <h3 className="mb-2 font-bold text-white text-xl">
+      <FiAlertCircle className="mb-4 text-red-400 animate-bounce" size={64} />
+      <h3 className="bg-clip-text bg-gradient-to-r from-red-400 to-neon mb-2 font-bold text-transparent text-xl">
         Oops! Something went wrong
       </h3>
       <p className="mb-6 max-w-md text-gray-400 text-center">
@@ -18,7 +18,7 @@ export const ErrorMessage = ({ message, onRetry }: ErrorMessageProps) => {
       {onRetry && (
         <button
           onClick={onRetry}
-          className="flex items-center gap-2 bg-primary hover:bg-primary/90 px-6 py-3 rounded-lg font-semibold text-white transition-colors"
+          className="flex items-center gap-2 bg-gradient-to-r from-primary hover:from-primary to-purple-600 hover:to-neon shadow-lg hover:shadow-glow-purple px-6 py-3 rounded-lg font-semibold text-white hover:scale-105 transition-all"
         >
           <FiRefreshCw size={20} />
           <span>Try Again</span>

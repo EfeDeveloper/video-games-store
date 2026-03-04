@@ -5,7 +5,6 @@ interface FilterStore extends FilterState {
   setSearchQuery: (query: string) => void;
   toggleCategory: (categoryId: number) => void;
   togglePlatform: (platformId: number) => void;
-  setPriceRange: (min: number, max: number) => void;
   setSortBy: (sortBy: SortOption) => void;
   resetFilters: () => void;
   getActiveFiltersCount: () => number;
@@ -15,7 +14,6 @@ const initialState: FilterState = {
   searchQuery: '',
   selectedCategories: [],
   selectedPlatforms: [],
-  priceRange: { min: 0, max: 100 },
   sortBy: 'relevance',
 };
 
@@ -48,10 +46,6 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
     });
   },
 
-  setPriceRange: (min, max) => {
-    set({ priceRange: { min, max } });
-  },
-
   setSortBy: (sortBy) => {
     set({ sortBy });
   },
@@ -67,7 +61,6 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
     if (state.searchQuery) count++;
     count += state.selectedCategories.length;
     count += state.selectedPlatforms.length;
-    if (state.priceRange.min > 0 || state.priceRange.max < 100) count++;
     if (state.sortBy !== 'relevance') count++;
 
     return count;

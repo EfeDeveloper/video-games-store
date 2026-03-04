@@ -43,7 +43,7 @@ export const ProductCard = memo(({ game, onClick }: ProductCardProps) => {
   return (
     <div
       onClick={onClick}
-      className="group relative bg-[#27272A] hover:shadow-xl rounded-lg overflow-hidden hover:scale-[1.02] transition-all animate-fade-in duration-300 cursor-pointer"
+      className="group relative bg-gradient-to-br from-purple-dark to-purple-deep hover:shadow-glow-multi border border-primary/20 hover:border-primary/50 rounded-xl overflow-hidden hover:rotate-[0.5deg] hover:scale-[1.03] transition-all animate-fade-in duration-300 cursor-pointer"
     >
       <div className="relative aspect-video overflow-hidden">
         <LazyImage
@@ -51,55 +51,58 @@ export const ProductCard = memo(({ game, onClick }: ProductCardProps) => {
           alt={game.name}
           className="group-hover:scale-110 transition-transform duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#27272A] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-deep via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-neon/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         <button
           onClick={handleToggleWishlist}
-          className="top-3 right-3 absolute bg-black/50 hover:bg-black/70 backdrop-blur-sm p-2 rounded-full hover:scale-110 transition-all duration-200"
+          className="top-3 right-3 absolute bg-black/60 hover:bg-gradient-to-br hover:from-neon/80 hover:to-pink-600 shadow-lg hover:shadow-glow-pink backdrop-blur-sm p-2 rounded-full hover:scale-110 transition-all duration-200"
           aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
         >
           {inWishlist ? (
-            <FaHeart className="text-red-500" size={18} />
+            <FaHeart className="text-neon" size={18} />
           ) : (
             <FiHeart className="text-white" size={18} />
           )}
         </button>
 
         {game.metacritic && (
-          <div className="top-3 left-3 absolute bg-primary px-2 py-1 rounded font-bold text-white text-sm">
+          <div className="top-3 left-3 absolute bg-gradient-to-r from-primary to-purple-600 shadow-glow-purple px-3 py-1 border border-primary/50 rounded-lg font-bold text-white text-sm">
             {game.metacritic}
           </div>
         )}
       </div>
 
-      <div className="p-4">
-        <h3 className="mb-2 font-bold text-white group-hover:text-primary text-lg line-clamp-1 transition-colors">
+      <div className="bg-gradient-to-b from-purple-deep/50 to-transparent p-4">
+        <h3 className="group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary group-hover:to-accent mb-2 font-bold text-white group-hover:text-transparent text-lg line-clamp-1 transition-all duration-300">
           {game.name}
         </h3>
 
         <div className="flex items-center gap-2 mb-3">
-          <div className="flex items-center gap-1">
-            <span className="text-yellow-400">★</span>
-            <span className="font-semibold text-secondary text-sm">
+          <div className="flex items-center gap-1 bg-yellow-500/10 px-2 py-1 border border-yellow-500/30 rounded-md">
+            <span className="text-yellow-400 text-sm">★</span>
+            <span className="font-semibold text-yellow-300 text-sm">
               {game.rating.toFixed(1)}
             </span>
           </div>
-          <span className="text-gray-500 text-xs">
+          <span className="text-gray-400 text-xs">
             ({game.ratings_count} reviews)
           </span>
         </div>
 
         {platformNames && (
-          <p className="mb-3 text-gray-400 text-xs line-clamp-1">
+          <p className="bg-black/20 mb-3 px-2 py-1 rounded text-gray-400 text-xs line-clamp-1">
             {platformNames}
           </p>
         )}
 
         <div className="flex justify-between items-center">
-          <span className="font-bold text-primary text-xl">$29.99</span>
+          <span className="bg-clip-text bg-gradient-to-r from-accent to-cyan-bright font-bold text-transparent text-xl">
+            $29.99
+          </span>
           <button
             onClick={handleAddToCart}
-            className="flex items-center gap-2 bg-primary hover:bg-primary/90 px-4 py-2 rounded-lg font-semibold text-white hover:scale-105 transition-all duration-200"
+            className="flex items-center gap-2 bg-gradient-to-r from-primary hover:from-primary to-purple-600 hover:to-neon shadow-md hover:shadow-glow-purple px-4 py-2 rounded-lg font-semibold text-white hover:scale-105 transition-all duration-200"
             aria-label="Add to cart"
           >
             <FiShoppingBag size={18} />

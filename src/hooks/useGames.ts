@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { fetchGames } from '@/services/gamesApi';
 import { useFilterStore } from '@/store/useFilterStore';
 import { GamesResponse, Game } from '@/types';
-import { categories } from '@/common/constants/categories';
-import { platforms } from '@/common/constants/platforms';
 
 export const useGames = () => {
   const [data, setData] = useState<GamesResponse | null>(null);
@@ -42,13 +40,11 @@ export const useGames = () => {
       setError(null);
 
       try {
-        const genresSlugs = selectedCategories
-          .map((id) => categories.find((cat) => cat.id === id)?.slug)
-          .filter(Boolean);
+        // For genres, we'll use IDs directly (API accepts both IDs and slugs for genres)
+        const genreIds = selectedCategories;
 
-        const platformsSlugs = selectedPlatforms
-          .map((id) => platforms.find((plat) => plat.id === id)?.slug)
-          .filter(Boolean);
+        // For platforms, we MUST use numeric IDs (API only accepts IDs for platforms)
+        const platformIds = selectedPlatforms;
 
         const params: {
           page: number;
@@ -64,12 +60,12 @@ export const useGames = () => {
           params.search = searchQuery;
         }
 
-        if (genresSlugs.length > 0) {
-          params.genres = genresSlugs.join(',');
+        if (genreIds.length > 0) {
+          params.genres = genreIds.join(',');
         }
 
-        if (platformsSlugs.length > 0) {
-          params.platforms = platformsSlugs.join(',');
+        if (platformIds.length > 0) {
+          params.platforms = platformIds.join(',');
         }
 
         if (sortBy !== 'relevance') {

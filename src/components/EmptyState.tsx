@@ -27,7 +27,7 @@ export const EmptyState = ({
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-        className="mb-6 text-gray-600 text-6xl"
+        className="mb-6 text-primary text-6xl animate-pulse"
       >
         {icon}
       </motion.div>
@@ -36,7 +36,7 @@ export const EmptyState = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="mb-3 font-bold text-white text-xl"
+        className="bg-clip-text bg-gradient-to-r from-primary to-accent mb-3 font-bold text-transparent text-xl"
       >
         {title}
       </motion.h3>
@@ -56,7 +56,7 @@ export const EmptyState = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
           onClick={action.onClick}
-          className="bg-primary hover:bg-primary/90 px-6 py-3 rounded-lg font-semibold text-white hover:scale-105 transition-all duration-200"
+          className="bg-gradient-to-r from-primary hover:from-primary to-purple-600 hover:to-neon shadow-lg hover:shadow-glow-purple px-6 py-3 rounded-lg font-semibold text-white hover:scale-105 transition-all duration-200"
         >
           {action.label}
         </motion.button>

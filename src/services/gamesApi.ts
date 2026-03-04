@@ -1,5 +1,5 @@
 import { API_CONFIG, buildQueryString } from '@/config/api';
-import { Game, GamesResponse } from '@/types';
+import { Game, GamesResponse, PlatformsResponse, GenresResponse } from '@/types';
 
 interface FetchGamesParams {
   page?: number;
@@ -77,4 +77,42 @@ export const fetchGameScreenshots = async (id: number) => {
 
 export const searchGames = async (query: string): Promise<GamesResponse> => {
   return fetchGames({ search: query });
+};
+
+export const fetchPlatforms = async (): Promise<PlatformsResponse> => {
+  const queryString = buildQueryString({ key: API_CONFIG.API_KEY });
+  const url = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.PLATFORMS}?${queryString}`;
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching platforms:', error);
+    throw error;
+  }
+};
+
+export const fetchGenres = async (): Promise<GenresResponse> => {
+  const queryString = buildQueryString({ key: API_CONFIG.API_KEY });
+  const url = `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.GENRES}?${queryString}`;
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching genres:', error);
+    throw error;
+  }
 };
